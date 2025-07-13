@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="./images/favicon/favicon.jpg"
+      type="image/x-icon"
+    />
+    <title>فروشگاه ساعی</title>
+    <link rel="stylesheet" href="./node_modules/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="./css/main.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <label for="show">
+        <div></div>
+        <div></div>
+        <div></div>
+      </label>
+
+      <input type="radio" name="menu" id="show" />
+      <input type="radio" name="menu" id="close" />
+      <header>
+        <label for="close">&times;</label>
+        <nav>
+          <ul>
+            <li>
+              <a href="#">home</a>
+            </li>
+            <li>
+              <a href="#">products</a>
+            </li>
+            <li>
+              <a href="#">gallery</a>
+            </li>
+            <li>
+              <a href="#">about</a>
+            </li>
+            <li>
+              <a href="#">contact</a>
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+      <div class="slider">
+        <div class="swiper saieShopSlider">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <img src="./images/slider/slide1.png" alt="slide" />
+            </div>
+            <div class="swiper-slide">
+              <img src="./images/slider/slide2.jpg" alt="slide" />
+            </div>
+            <div class="swiper-slide">
+              <img src="./images/slider/slide3.jpg" alt="slide" />
+            </div>
+            <div class="swiper-slide">
+              <img src="./images/slider/slide4.jpg" alt="slide" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="products">
+      </div>
+    </div>
+
+    <script src="./node_modules/swiper/swiper-bundle.min.js"></script>
+    <script>
+      var swiper = new Swiper(".saieShopSlider", {
+        spaceBetween: 0,
+        centeredSlides: true,
+        autoplay: {
+          delay: 2500,
+          disableOnInteraction: false,
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
+    </script>
+
+    <script>
+        async function fetchData(){
+            let products = ''
+            let data = await fetch("https://fakestoreapi.com/Products")
+            let res = await data.json()
+            products = res.map((elem)=>{
+                return `<div class="product">
+            <div class="title">${elem.title}</div>
+            <div class="image">
+                <img src=${elem.image} alt="product">
+            </div>
+            <div class="price">$${elem.price}</div>
+            <div class="description">
+                ${elem.description}
+            </div>
+            <div class="category">catrgory: ${elem.category}</div>
+            <div class="rating">
+                <div class="rate">rate: ${elem.rating.rate}</div>
+                <div class="count">count: ${elem.rating.count}</div>
+            </div>
+            <button class="buyBtn">buy now</button>
+        </div>`
+            })
+
+            document.querySelector(".products").insertAdjacentHTML("afterbegin",products.join(" "))
+        }
+        fetchData()
+    </script>
+  </body>
+</html>
