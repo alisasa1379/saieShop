@@ -1,0 +1,7 @@
+footer{
+    flex-flow: row nowrap;
+    div{
+        width: 30%;
+        height: 100%;
+    }
+}
